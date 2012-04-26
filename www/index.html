@@ -9,20 +9,16 @@
     <div class="navbar navbar-fixed-top">
         <div class="navbar-inner">
             <div class="container">
-                <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </a>
+
                 <a class="brand" href="#">Project name</a>
-                <div class="nav-collapse">
-                    <ul class="nav">
-                        <li class="active"><a href="#">Home</a></li>
-                        <li><a href="#about">About</a></li>
-                        <li><a href="#contact">Contact</a></li>
-                    </ul>
-                </div>
-            </div>
+
+                <ul class="nav pull-right">
+                    <li class="dropdown">
+                        <button class="webapp-install btn btn-primary"
+                                style="display: none;">Install</button>
+                   </li>
+                </ul>
+             </div>
         </div>
     </div>
 
@@ -31,11 +27,20 @@
         <p>Use this document as a way to quick start any new project.
         All you get is this message and a barebones HTML document.</p>
 
+        <div>
+            <div style="display: none;" class="webapp-error alert alert-block">
+                <a class="close" data-dismiss="alert">×</a>
+                <h4 class="alert-heading">Install error</h4>
+                <span class="webapp-error-details"></span>
+            </div>
+        </div>
+
+
         <div class="row">
             <div class="span4">
                 <h2>Network Status</h2>
                 <p>
-                    <span id="networkStatus" class="label"></span>
+                    <span class="networkStatus label"></span>
                 </p>
             </div>
 
@@ -43,25 +48,24 @@
                 <h2>AppCache Status</h2>
 
                 <p>
-                    <span id="appCacheStatus" class="label">n/a</span>
+                    <span class="appCacheStatus label">n/a</span>
                 </p>
 
                 <p>
-                    <div id="updateAlert" style="display: none;" class="well">
+                    <div class="updateAlert well" style="display: none;">
                         <p>There is an application update. Update now?</p>
-                        <button id="updateButton" class="btn btn-primary">Update</button>
+                        <button class="updateButton btn btn-primary">Update</button>
                     </div>
                 </p>
 
                 <p>
-                    <button id="checkUpdate"
-                            class="btn btn-primary"
+                    <button class="checkUpdate btn btn-primary"
                             style="display: none;">Check for Update</button>
                 </p>
 
-                <div id="eventSection" style="display: none;">
+                <div class="eventSection" style="display: none;">
                     <p>appCache events fired (most recent first):</p>
-                    <div id="appCacheEvent"></div>
+                    <div class="appCacheEvent"></div>
                 </div>
             </div>
 
@@ -90,6 +94,7 @@
             </div>
         </div>
     </div>
-    <script async data-main="js/app" src="js/require.js" charset="utf-8"></script>
+    <!-- Load the main app module via the module loader -->
+    <script async data-main="js/app" src="js/lib/require.js" charset="utf-8"></script>
 </body>
 </html>
