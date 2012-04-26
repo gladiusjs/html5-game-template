@@ -1,6 +1,5 @@
 // To load an app-specific module, place it in an app/ directory that is a
-// sibling to this file. See app/uiNetworks.js and app/uiAppCache.js for
-// examples.
+// sibling to this file.
 
 // For any third party dependencies, like jQuery, place them in the lib folder.
 
