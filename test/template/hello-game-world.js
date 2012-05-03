@@ -1,6 +1,14 @@
+
 module("basic functionality provided by the game template");
 
-test("dummy stub test", function() {
+asyncTest("installing game-shim", function() {
+
   expect(1);
-  ok(true, "dummy test passes");
+
+  require(['../www/js/lib/game-shim'], function () {
+    ok('GameShim' in window, 
+       'GameShim property in global object after requiring');
+    start();
+  });
+  
 });
