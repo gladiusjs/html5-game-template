@@ -35,6 +35,12 @@ define(function (require) {
     }
 
     return {
+      
+        onCreate: {
+          run: function (d, v, namedArgs) {
+            return v.command('add', '-amdoff', 'toji/game-shim')
+          } 
+        },
 
         //Builds the JS and CSS into one file each. If you want to do
         //dynamic loading of scripts, pass -dynamic to the build, and
