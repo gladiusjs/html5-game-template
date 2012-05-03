@@ -7,8 +7,8 @@ asyncTest("installing game-shim", function() {
   
   // Because GameShim installs itself in the window global,
   // and there's no real way to uninstall it without writing the inverse
-  // code.  So all subsequent tests are going to run in this modified
-  // environment.  Yuck.
+  // code for most of the shim.  So all subsequent tests are going to run
+  // in this modified environment.  Yuck.
   //
   require(['../www/js/lib/game-shim'], function () {
     ok('GameShim' in window, 
