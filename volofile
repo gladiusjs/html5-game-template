@@ -35,78 +35,11 @@ define(function (require) {
     }
 
     return {
-        //Run as the result of first setting up this project via a
-        //"volo create" call. Gets the twitter bootstrap code, and
-        //jQuery.
+      
         onCreate: {
-            run: function (d, v, namedArgs) {
-                var tempName = 'tempbootstrap',
-                    jsNameRegExp = /bootstrap-(\w*)\.js$/;
-
-                //Grab the twitter bootstrap and jQuery
-                v.command('create', tempName, 'twitter/bootstrap')
-                .then(function () {
-                    return v.command('add', 'jquery/jquery/1.7.2');
-                })
-                .then(function (result) {
-                    //Move the JS to the right location.
-                    var jsFiles = v.getFilteredFileList(tempName + '/js', /\.js$/, /js\/tests\//),
-                        promises = [];
-
-                    jsFiles.forEach(function (file) {
-                        //Pull off the name part from bootstrap-name.js pattern.
-                        var name = jsNameRegExp.exec(file)[1],
-                            destName = 'www/js/lib/bootstrap/' + name + '.js',
-                            damd = q.defer();
-
-                        v.copyFile(file, destName);
-
-                        //Convert the file to AMD style
-                        amdify.run.apply(amdify, [damd, v, {
-                            depends: 'jquery'
-                        }, destName]);
-
-                        promises.push(damd);
-                    });
-
-                    //Wait for all the amdify calls to finish.
-                    q.all(promises)
-                    .then(function (value) {
-
-                        //Copy the images over.
-                        v.copyDir(tempName + '/img', 'www/img');
-
-                        //Copy the less files.
-                        v.copyDir(tempName + '/less', 'tools/less');
-
-                        //Compile the CSS.
-                        v.command('less').then(function () {
-                            v.rm(tempName);
-                        })
-                        .then(function () {
-                            //Ask if this is a project for GitHub
-                            return v.prompt('Will this be an app hosted on ' +
-                                            'GitHub Pages [n]? ');
-                        })
-                        .then(function (value) {
-                            if (value && value.charAt(0).toLowerCase() === 'y') {
-                                //Modify this file and change the GitHub
-                                //Pages to true.
-                                v.write('volofile', v.read('volofile')
-                                        .replace(/forGitHubPages = false/,
-                                                 'forGitHubPages = true'));
-
-                                //Create a file that indicates GitHub's jekyll
-                                //is not needed.
-                                v.write('.nojekyll', '');
-                            }
-                        })
-                        .then(d.resolve, d.reject);
-
-                    }).fail(d.reject);
-                })
-                .fail(d.reject);
-            }
+          run: function (d, v, namedArgs) {
+            return v.command('add', '-amdoff', 'toji/game-shim')
+          } 
         },
 
         //Builds the JS and CSS into one file each. If you want to do
@@ -268,18 +201,6 @@ define(function (require) {
 
                 digestFile(files[0]);
             }
-        },
-
-        //Runs less on the .less files in tools/less to generate the CSS files.
-        less: function (d, v, namedArgs) {
-            q.all([
-                v.exec('node tools/oneless.js tools/less/bootstrap.less > www/css/bootstrap.css'),
-                v.exec('node tools/oneless.js tools/less/responsive.less > www/css/bootstrap-responsive.css')
-            ])
-            .then(function () {
-                d.resolve();
-            })
-            .fail(d.reject);
         },
 
         appcache: function (d, v, namedArgs) {
