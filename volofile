@@ -9,30 +9,10 @@ define(function (require) {
         crypto = require('crypto'),
         fs = require('fs'),
         path = require('path'),
-        forGitHubPages = false,
-        skipFlattenForGitHubPages = false;
-
-    //Cleans up the
-    function flattenForGitHubPages(v) {
-        if (!forGitHubPages || skipFlattenForGitHubPages) {
-            return;
-        }
-
-        //Move the contents of www-built to the top level
-        fs.readdirSync('www-built').forEach(function (item) {
-            var target = path.join('.', item);
-
-            if (v.exists(target)) {
-                v.rm(target);
-            }
-
-            v.mv(path.join('www-built', item), target);
-        });
-
-        //Remove the www-built directory, since it should not be committed
-        //into the github branch.
-        v.rm('www-built');
-    }
+        github = require('volo/github'),
+        githubAuth = require('volo/github/auth'),
+        buildDir = 'www-built',
+        pagesDir = 'www-ghpages';
 
     return {
       
@@ -56,23 +36,21 @@ define(function (require) {
 
             run: function (d, v, namedArgs) {
                 q.call(function () {
-                    //Remove the old build.
-                    if (v.exists('www-built')) {
-                        v.rm('www-built');
-                    }
+                    //Remove the old dir
+                    v.rm(buildDir);
 
                     if (!namedArgs.dynamic) {
                         //Copy the directory for output.
-                        v.copyDir('www', 'www-built');
+                        v.copyDir('www', buildDir);
 
                         //Remove the js dir from the built area, will be
                         //replaced by an optimized app.js
-                        v.rm('www-built/js');
+                        v.rm(buildDir + '/js');
 
                         //Do the CSS optimization
                         return v.spawn('node', ['tools/r.js', '-o',
                                                 'cssIn=www/css/app.css',
-                                                'out=www-built/css/app.css'], {
+                                                'out=' + buildDir + '/css/app.css'], {
                             useConsole: !namedArgs.quiet
                         });
                     }
@@ -89,7 +67,7 @@ define(function (require) {
                                         'baseUrl=js/lib',
                                         'paths.app=../app',
                                         'name=app',
-                                        'dir=www-built',
+                                        'dir=' + buildDir,
                                         'optimize=' + optimize], {
                             useConsole: !namedArgs.quiet
                         });
@@ -101,7 +79,7 @@ define(function (require) {
                                         'paths.almond=../../../tools/almond',
                                         'name=almond',
                                         'include=app',
-                                        'out=www-built/js/app.js',
+                                        'out=' + buildDir + '/js/app.js',
                                         'optimize=' + optimize], {
                             useConsole: !namedArgs.quiet
                         });
@@ -110,7 +88,7 @@ define(function (require) {
                 .then(function (buildOutput) {
                     //Remove all the CSS except for the app.css, since it
                     //inlines all the other ones.
-                    v.getFilteredFileList('www-built/css').forEach(function (path) {
+                    v.getFilteredFileList(buildDir + '/css').forEach(function (path) {
                         if (!/app\.css$/.test(path)) {
                             v.rm(path);
                         }
@@ -119,7 +97,7 @@ define(function (require) {
                     //If almond is in use, it is built into app.js, so need
                     //to update the script tag to just load app.js instead.
                     if (!namedArgs.dynamic) {
-                        var indexName = 'www-built/index.html',
+                        var indexName = buildDir + '/index.html',
                             contents = v.read(indexName),
                             scriptRegExp = /(<script[^>]+data-main="[^"]+"[^>]+)(src="[^"]+")([^>]+>\s*<\/script>)/;
 
@@ -130,10 +108,6 @@ define(function (require) {
 
                         v.write(indexName, contents);
                     }
-                    return buildOutput;
-                })
-                .then(function (buildOutput) {
-                    flattenForGitHubPages(v);
                     return buildOutput;
                 })
                 .then(function (buildOutput) {
@@ -203,24 +177,186 @@ define(function (require) {
             }
         },
 
-        appcache: function (d, v, namedArgs) {
-            var hasBuilt = v.exists('www-built');
+        ghdeploy: {
+            run: function (d, v, namedArgs) {
+                var spawnOptions = {
+                    useConsole: !namedArgs.quiet
+                },
+                authInfo, repoName, hasGhPages;
 
-            //Delay the flattening until later.
-            skipFlattenForGitHubPages = true;
+                q.call(function () {
+                    //First check if there is already a repo
+                    if (!v.exists(buildDir)) {
+                        throw new Error('Run build or appcache first to generate a deploy target in "www-built".');
+                    }
+
+                    //If already have gh-pages dir, go to next step.
+                    if (v.exists(pagesDir)) {
+                        return;
+                    }
+
+                    //Figure out if already in a github repo.
+                    return githubAuth.fetch({ v: v })
+                    .then(function (info) {
+                        authInfo = info;
+
+                        //Suggest the current directory name as the repo name.
+                        repoName = path.basename(process.cwd());
+
+                        return v.prompt(authInfo.user +
+                                        ', name of github repo [' +
+                                        repoName + ']:');
+                    })
+                    .then(function (promptRepoName) {
+                        var dfd = q.defer();
+
+                        if (promptRepoName) {
+                            repoName = promptRepoName;
+                        }
+
+                        //First check to see if it exists.
+                        github('repos/' + authInfo.user + '/' + repoName)
+                        .then(function (data) {
+                            var sshUrl = data.ssh_url;
+
+                            //Repo exists, see if there is a gh-pages repo
+                            //already
+                            github('repos/' + authInfo.user + '/' + repoName + '/branches')
+                            .then(function (data) {
+                                if (data && data.length) {
+                                    hasGhPages = data.some(function (branch) {
+                                        return branch.name === 'gh-pages';
+                                    });
+                                }
+                                dfd.resolve(sshUrl);
+                            }, dfd.reject);
+                        }, function (err) {
+                            if (err.response.statusCode === 404) {
+                                github('user/repos', {
+                                    method: 'POST',
+                                    token: authInfo.token,
+                                    content: {
+                                        name: repoName
+                                    }
+                                })
+                                .then(function (data) {
+                                    dfd.resolve(data.ssh_url);
+                                }, function (err) {
+                                   dfd.reject(err);
+                                });
+                            } else {
+                                dfd.reject(err);
+                            }
+                        });
+                        return dfd.promise;
+                    })
+                    .then(function (sshUrl) {
+                        //Set up .git.
+                        v.mkdir(pagesDir);
+
+                        //Set up the gh-pages repo in the built area.
+                        return v.withDir(pagesDir, function () {
+                            if (hasGhPages) {
+                                //Set up the git repo locally. Just commit a file
+                                //to get the repo prepped and sent to GitHub.
+                                return v.sequence([
+                                    ['git', 'init'],
+                                    ['git', 'remote', 'add', 'origin', sshUrl],
+                                    //This step mandated by:
+                                    //http://help.github.com/pages/#project_pages_manually
+                                    ['git', 'symbolic-ref', 'HEAD', 'refs/heads/gh-pages'],
+                                    [v,     'rm', '.git/index'],
+                                    ['git', 'clean', '-fdx'],
+
+                                    ['git', 'pull', 'origin', 'gh-pages']
+                                ], spawnOptions);
+                            } else {
+                                //Set up the git repo locally. Just commit a file
+                                //to get the repo prepped and sent to GitHub.
+                                return v.sequence([
+                                    ['git', 'init'],
+                                    ['git', 'remote', 'add', 'origin', sshUrl],
+                                    //This step mandated by:
+                                    //http://help.github.com/pages/#project_pages_manually
+                                    ['git', 'symbolic-ref', 'HEAD', 'refs/heads/gh-pages'],
+                                    [v,     'rm', '.git/index'],
+                                    ['git', 'clean', '-fdx'],
+
+                                    [v,     'write', 'index.html', 'Setting up pages...'],
+                                    ['git', 'add', 'index.html'],
+                                    ['git', 'commit', '-m', 'Create branch.'],
+                                    ['git', 'push', 'origin', 'gh-pages']
+                                ], spawnOptions);
+                            }
+                        });
+                    });
+                })
+                .then(function () {
+                    var message = namedArgs.m;
+                    if (!message) {
+                        message = 'Deploy';
+                    }
+
+                    //Clean up www-ghpages first, but keep .git
+                    if (v.exists(pagesDir)) {
+                        fs.readdirSync(pagesDir).forEach(function (name) {
+                            if (name !== '.git') {
+                                v.rm(pagesDir + '/' + name);
+                            }
+                        });
+                    }
+
+                    //Copy the contents of www-built to www-ghpages
+                    //Copy the directory for output.
+                    v.copyDir(buildDir, pagesDir);
+
+                    //Trigger update to origin.
+                    return v.withDir(pagesDir, function () {
+                        return v.sequence([
+                            //Add any new files
+                            ['git', 'add', '.'],
+                            //Remove any files from git that are not on on disk
+                            ['git', 'add', '-u'],
+                            ['git', 'commit', '-m', message],
+                            ['git', 'push', 'origin', 'gh-pages']
+                        ], spawnOptions);
+                    });
+                })
+                .then(function () {
+                    if (repoName) {
+                        return 'GitHub Pages is set up. Check http://' +
+                                authInfo.user + '.github.com/' + repoName +
+                                '/ in about 10-15 minutes.';
+                    }
+                })
+                .then(d.resolve, d.reject);
+            }
+        },
+
+        //Runs less on the .less files in tools/less to generate the CSS files.
+        less: function (d, v, namedArgs) {
+            q.all([
+                v.exec('node tools/oneless.js tools/less/bootstrap.less > www/css/bootstrap.css'),
+                v.exec('node tools/oneless.js tools/less/responsive.less > www/css/bootstrap-responsive.css')
+            ])
+            .then(function () {
+                d.resolve();
+            })
+            .fail(d.reject);
+        },
+
+        appcache: function (d, v, namedArgs) {
+            var hasBuilt = v.exists(buildDir);
 
             v.command('build')
             .then(function () {
-                var manifest = v.read('./tools/manifest.appcache'),
-                    master = v.read('./www-built/index.html'),
+                var manifest = v.read('tools/manifest.appcache'),
+                    master = v.read(buildDir + '/index.html'),
                     appFiles;
 
-                //Reset skipFlatten flag
-                skipFlattenForGitHubPages = false;
-
-                appFiles = v.getFilteredFileList('www-built');
+                appFiles = v.getFilteredFileList(buildDir);
                 appFiles = appFiles.map(function (file) {
-                    var start = file.indexOf('/www-built/');
+                    var start = file.indexOf('/' + buildDir + '/');
                     start = (start !== -1) ? (start + 11) : 0;
                     return file.substr(start, file.length);
                 });
@@ -228,19 +364,16 @@ define(function (require) {
                 master = master
                         .replace(/<html\s?/, '<html manifest="manifest.appcache" ')
                         .replace(/manifest\.appcache"\s>/, 'manifest.appcache">');
-                v.write('www-built/index.html', master);
+                v.write(buildDir + '/index.html', master);
 
-                return v.command('digest', 'dir=www-built')
+                return v.command('digest', 'dir=' + buildDir)
                 .then(function (stamp) {
                     manifest = v.template(manifest, {
                         files : appFiles.join('\n'),
                         stamp : stamp
                     });
-                    v.write('www-built/manifest.appcache', manifest);
+                    v.write(buildDir + '/manifest.appcache', manifest);
                 });
-            })
-            .then(function () {
-                flattenForGitHubPages(v);
             })
             .then(function () {
                 //Inform the user of the right mime type, but only do it if
