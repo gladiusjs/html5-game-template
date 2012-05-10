@@ -7,7 +7,17 @@
     <title>Template Game</title>
 </head>
 <body>
+    <!-- Insert web content here -->
+
+    <!-- If you need/want to load libraries via <script> rather than 
+      require.js, it's safest to insert those script tags here before
+      require loads -->
+      
     <script src="js/lib/require.js" charset="utf-8"></script>
-    <script async src="js/app.js" charset="utf-8"></script>
+    
+    <!-- volofile has special knowledge of the name app.js and uses
+      it during the build process so, so look over there too if you want
+      to change this -->
+    <script src="js/app.js" charset="utf-8"></script>
 </body>
 </html>
