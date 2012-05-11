@@ -15,8 +15,10 @@
 * structured for maintainability using require.js
 * includes qunit test harness
 
-(coming soon: jshint, app store wiring, mozilla persona wiring) 
-(FAQ)
+# misc
+* FAQ
+* more documentation to come
+* up next: jshint, app store wiring, mozilla persona wiring  
 
 # prerequisites
 * be sure node.js and npm are installed and in your PATH
