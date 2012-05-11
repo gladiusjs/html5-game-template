@@ -2,7 +2,7 @@
 
 **fast start**
 
-* includes Toji's game-shim polyfills to smooth over browser differences 
+* includes [Toji's game-shim polyfills](https://github.com/toji/game-shim) to smooth over browser differences 
 * easily pull in key libraries from github *(FAQ link) using volo
 
 **easy build & deploy**
