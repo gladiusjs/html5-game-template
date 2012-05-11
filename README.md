@@ -20,15 +20,11 @@
 
 # prerequisites
 * be sure node.js and npm are installed and in your PATH
-* (optional) if you wish to deploy to github pages, ensure that git is in your PATH
+* (optional) if you wish to deploy to github pages, ensure that git is installed and in your PATH
 * Use npm to install volo into your path, if it's not there already:
 
     > npm install -g volo
-    npm http GET https://registry.npmjs.org/volo
-    npm http 200 https://registry.npmjs.org/volo
-    /opt/local/bin/volo -> /opt/local/lib/node_modules/volo/bin/volo
-    volo@0.1.4 /opt/local/lib/node_modules/volo
-    
+
 # let's get started
 
 Create and configure a new copy of this game template:
