@@ -15,11 +15,6 @@
 * structured for maintainability using require.js
 * includes qunit test harness
 
-# misc
-* FAQ
-* more documentation to come
-* up next: jshint, app store wiring, mozilla persona wiring  
-
 # prerequisites
 * be sure node.js and npm are installed and in your PATH
 * (optional) if you wish to deploy to github pages, ensure that git is installed and in your PATH
@@ -69,3 +64,9 @@ Deploy the built version to the gh-pages branch of suitably named repo:
 
     > volo ghdeploy
     (...)
+
+# misc
+* FAQ
+* more documentation to come
+* up next: jshint, app store wiring, mozilla persona wiring  
+
