@@ -15,6 +15,7 @@
 * structured for maintainability using require.js
 * includes qunit test harness
 
+# philosophy
 The philosophy of this template is to provide basic infrastructure pieces
 that are required by almost every game, and to make it easy to pull in
 libraries specific to your game using volo.  Higher-level, more specialized
