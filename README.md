@@ -71,21 +71,7 @@ Deploy the built version to the gh-pages branch of suitably named repo:
     GitHub user name: dmose
     GitHub password: 
     Contacting GitHub...
-    Save OAuth token for later use [y]? 
-    Cannot save local config, continuing without saving.
-    dmose, name of github repo [myNewGame]: monkeyGame
-    Initialized empty Git repository in /Users/dmose/s/games/myNewGame/www-ghpages/.git/
-    [gh-pages (root-commit) e5dbfd4] Create branch.
-    1 file changed, 1 insertion(+)
-    create mode 100644 index.html
-    To git@github.com:dmose/monkeyGame.git
-    * [new branch]      gh-pages -> gh-pages
-    [gh-pages 1296c81] Deploy
-    4 files changed, 42 insertions(+), 1 deletion(-)
-    create mode 100644 css/app.css
-    create mode 100644 js/app.js
-    create mode 100644 manifest.appcache
-    create mode 100644 manifest.webapp
+      (...)
     To git@github.com:dmose/monkeyGame.git
     e5dbfd4..1296c81  gh-pages -> gh-pages
     GitHub Pages is set up. Check http://dmose.github.com/monkeyGame/ in about 10-15 minutes.
