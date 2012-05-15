@@ -24,7 +24,7 @@ with writing your game.
 Higher-level, more specialized templates (e.g. for a simple canvas game or an MMORPG) would make sense to build on top of this one.
 
 Note that this is current focussed entirely on the browser-based pieces of a
-game, but making it easy for a game to offer to a Node-based server-side
+game, but making it easy for a game to offer a Node-based server-side
 component is likely to be in scope in the fairly near future.
 
 
