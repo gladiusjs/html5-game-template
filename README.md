@@ -3,7 +3,7 @@
 
 * includes [Toji's game-shim polyfills](https://github.com/toji/game-shim) to
  smooth over browser differences 
-* easily pull in [key libraries](FAQ.html)from github using
+* easily pull in [key libraries](FAQ.html) from github using
  [volo](https://github.com/volojs/volo)
 
 **easy build & deploy**
