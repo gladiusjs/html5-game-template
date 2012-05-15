@@ -21,8 +21,7 @@ This barebones template supplies some basic infrastructure that a good
 web game can be built on, so that as the game developer, you can just get on
 with writing your game.  
 
-Higher-level, more specialized templates (e.g. for a simple canvas game or
-for an MMORPG) would make sense to build on top of this one.
+Higher-level, more specialized templates (e.g. for a simple canvas game or an MMORPG) would make sense to build on top of this one.
 
 Note that this is current focussed entirely on the browser-based pieces of a
 game, but making it easy for a game to offer to a Node-based server-side
