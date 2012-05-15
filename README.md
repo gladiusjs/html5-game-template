@@ -86,5 +86,5 @@ Deploy the built version to the gh-pages branch of suitably named repo:
 # misc
 * FAQ
 * more documentation to come
-* up next: jshint, app store wiring, mozilla persona wiring  
+* upcoming features: jshint, app store wiring, mozilla persona auth wiring  
 
