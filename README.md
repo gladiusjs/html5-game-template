@@ -1,4 +1,4 @@
-# barebones template of basic infrastructure useful to most games
+# barebones template of infrastructure useful to most games
 **fast start**
 
 * includes [Toji's game-shim polyfills](https://github.com/toji/game-shim) to
