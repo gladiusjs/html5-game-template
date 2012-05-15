@@ -1,9 +1,10 @@
-# minimalist game template lets you hit the ground coding
-
+# barebones game template provides basic infrastructure useful for most games
 **fast start**
 
-* includes [Toji's game-shim polyfills](https://github.com/toji/game-shim) to smooth over browser differences 
-* easily pull in key libraries from github *(FAQ link) using volo
+* includes [Toji's game-shim polyfills](https://github.com/toji/game-shim) to
+ smooth over browser differences 
+* easily pull in [key libraries](FAQ.html)from github using
+ [volo](https://github.com/volojs/volo)
 
 **easy build & deploy**
 
@@ -16,15 +17,17 @@
 * includes qunit test harness
 
 # philosophy
-The intent of this template is to provide basic infrastructure pieces
-that are required by almost every game, and to make it easy to pull in
-libraries specific to your game using volo.  Higher-level, more specialized
-templates (e.g. for a first-person shooter or an MMORPG) would make sense
-to build on top of this one.
+This barebones template supplies some basic infrastructure that a good
+web game can be built on, so that as the game developer, you can just get on
+with writing your game.  
 
-Note that this is current focussed on purely browser-based games, but making
-it easy for a game to offer to a Node-based server-side component is likely to
-be in scope in the fairly near future.
+Higher-level, more specialized templates (e.g. for a simple canvas game or
+for an MMORPG) would make sense to build on top of this one.
+
+Note that this is current focussed entirely on the browser-based pieces of a
+game, but making it easy for a game to offer to a Node-based server-side
+component is likely to be in scope in the fairly near future.
+
 
 # prerequisites
 * be sure node.js and npm are installed and in your PATH
