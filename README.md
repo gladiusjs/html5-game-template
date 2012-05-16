@@ -28,8 +28,9 @@ it should be easy to build higher-level, more specialized templates
 an MMORPG) on top of this one.
 
 # prerequisites
-* be sure node.js and npm are installed and in your PATH
-* (optional) if you wish to deploy to github pages, ensure that git is installed and in your PATH
+* be sure [node.js and npm](http://nodejs.org/) are installed and in your PATH
+* (optional) if you wish to deploy to github pages, ensure that 
+ [git](http://help.github.com/set-up-git-redirect) is installed and configured
 * Use npm to install volo into your path, if it's not there already:
 
     > npm install -g volo
