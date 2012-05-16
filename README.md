@@ -1,6 +1,6 @@
 # barebones HTML5 game template
 
-This template supplies some basic infrastructure that a good
+This template supplies basic infrastructure that a good
 web game can be built on, so that as the game developer, you can just
 get on with writing your game.
 
