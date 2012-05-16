@@ -21,15 +21,11 @@ get on with writing that game.
 * structured for maintainability using [RequireJS](requirejs.org)
 * includes pre-configured QUnit test harness
 
-# bigger picture
+** easy to specialize **
 
-Higher-level, more specialized templates (e.g. for a simple canvas game,
-an engine-specific game, or an an MMORPG) would make sense to build on top
-of this one.
-
-Note that this template is currently focussed entirely on the browser-based
-pieces of a game, but making it easy for a game to offer a Node-based
-server-side component is likely to be in scope in the fairly near future.
+It should be easy to build higher-level, more specialized templates
+(e.g. for a simple canvas game, a Gladius-engine, or an MMORPG) on top of this
+one.
 
 # prerequisites
 * be sure node.js and npm are installed and in your PATH
@@ -87,7 +83,6 @@ Deploy the built version to the gh-pages branch of suitably named repo:
     GitHub Pages is set up. Check http://dmose.github.com/monkeyGame/ in about 10-15 minutes.
 
 # misc
-* FAQ
-* more documentation to come
-* upcoming features: jshint, app store wiring, mozilla persona auth wiring  
+* [FAQ](https://github.com/gladiusjs/html5-game-template/wiki/FAQ)
+* upcoming features: jshint, mozilla persona auth, Node.js server side piece
 
