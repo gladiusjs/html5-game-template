@@ -2,7 +2,7 @@
 
 This template supplies basic infrastructure that a good
 web game can be built on, so that as the game developer, you can just
-get on with writing your game.
+get on with writing that game.
 
 **fast start**
 
