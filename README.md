@@ -21,7 +21,7 @@ get on with writing that game.
 * structured for maintainability using [RequireJS](requirejs.org)
 * includes pre-configured QUnit test harness
 
-** easy to specialize **
+**easy to specialize**
 
 It should be easy to build higher-level, more specialized templates
 (e.g. for a simple canvas game, a Gladius-engine, or an MMORPG) on top of this
