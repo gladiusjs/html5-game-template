@@ -1,10 +1,15 @@
-# barebones template of infrastructure useful to most games
+# barebones HTML5 game template
+
+This barebones template supplies some basic infrastructure that a good
+web game can be built on, so that as the game developer, you can just
+get on with writing your game.
+
 **fast start**
 
 * includes [Toji's game-shim polyfills](https://github.com/toji/game-shim) to
  smooth over browser differences 
 * easily pull in [key libraries](FAQ.html) from github using
- [volo](https://github.com/volojs/volo)
+ [James Burke's volo](https://github.com/volojs/volo)
 
 **easy build & deploy**
 
@@ -16,17 +21,15 @@
 * structured for maintainability using require.js
 * includes qunit test harness
 
-# philosophy
-This barebones template supplies some basic infrastructure that a good
-web game can be built on, so that as the game developer, you can just get on
-with writing your game.  
+# bigger picture
 
-Higher-level, more specialized templates (e.g. for a simple canvas game or an MMORPG) would make sense to build on top of this one.
+Higher-level, more specialized templates (e.g. for a simple canvas game,
+an engine-specific game, or an an MMORPG) would make sense to build on top
+of this one.
 
-Note that this is current focussed entirely on the browser-based pieces of a
-game, but making it easy for a game to offer a Node-based server-side
-component is likely to be in scope in the fairly near future.
-
+Note that this template is currently focussed entirely on the browser-based
+pieces of a game, but making it easy for a game to offer a Node-based
+server-side component is likely to be in scope in the fairly near future.
 
 # prerequisites
 * be sure node.js and npm are installed and in your PATH
