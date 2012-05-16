@@ -23,9 +23,9 @@ get on with writing that game.
 
 **easy to specialize**
 
-It should be easy to build higher-level, more specialized templates
-(e.g. for a simple canvas game, a Gladius-engine, or an MMORPG) on top of this
-one.
+it should be easy to build higher-level, more specialized templates
+(e.g. for a simple canvas game, a game based on the Gladius engine, or
+an MMORPG) on top of this one.
 
 # prerequisites
 * be sure node.js and npm are installed and in your PATH
