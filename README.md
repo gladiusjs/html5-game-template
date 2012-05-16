@@ -8,18 +8,18 @@ get on with writing your game.
 
 * includes [Toji's game-shim polyfills](https://github.com/toji/game-shim) to
  smooth over browser differences 
-* easily pull in [key libraries](FAQ.html) from github using
+* easy to pull in [key libraries](FAQ.html) from github using
  [James Burke's volo](https://github.com/volojs/volo)
 
 **easy build & deploy**
 
 * builds minified game configured for browser appcache using UglifyJS and almond.js
-* deploy to a live server trivially (currently supports github-pages)
+* trivial to deploy to a live server (currently supports github-pages)
 
 **default best practices help your codebase scale**
 
-* structured for maintainability using require.js
-* includes qunit test harness
+* structured for maintainability using [RequireJS](requirejs.org)
+* includes pre-configured QUnit test harness
 
 # bigger picture
 
