@@ -89,9 +89,9 @@ Deploy the built version to the gh-pages branch of suitably named repo:
 
 # credits
 
-main developers: Dan Mosedale (@dmose), and James Burke (@jrburke)
+Main developers: Dan Mosedale and James Burke 
 
-This template is based on, and still shares code with, @jrburke's 
+This template is based on, and still shares code with, James Burke's
 (create-responsive-template)[https://github.com/volojs/create-responsive-template]
 for [volo](https://github.com/volojs/volo), and leans heavily on volo.
 Thanks to the contributors to both volo and create-responsive-template.
