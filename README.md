@@ -85,7 +85,8 @@ Deploy the built version to the gh-pages branch of suitably named repo:
 
 # misc
 * [FAQ](https://github.com/gladiusjs/html5-game-template/wiki/FAQ)
-* upcoming features: jshint, mozilla persona auth, Node.js server side piece
+* upcoming features (depending in part on user feedback): jshint, [Mozilla
+Persona auth](http://www.mozilla.org/en-US/persona/about/), Node.js server side piece
 
 # credits
 
