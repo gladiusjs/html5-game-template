@@ -97,7 +97,7 @@ This template is based on, and still shares code with, James Burke's
 for [volo](https://github.com/volojs/volo), and leans heavily on volo.
 Thanks to the contributors to both volo and create-responsive-template.
 
-Thanks also to Alan Kligman for helping crispify various parts of the 
+Thanks to Alan Kligman for helping crispify various parts of the 
 the documentation and what we're shipping.
 
 Thanks also to the authors of the following:
