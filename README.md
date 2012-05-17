@@ -8,7 +8,7 @@ get on with writing that game.
 
 * includes [Toji's game-shim polyfills](https://github.com/toji/game-shim) to
  smooth over browser differences 
-* easy to pull in [key libraries](FAQ.html) from github using
+* easy to pull in [some key libraries](https://github.com/gladiusjs/html5-game-template/wiki/game-library-volo-compatibility) from github using
  [James Burke's volo](https://github.com/volojs/volo)
 
 **easy build & deploy**
