@@ -87,3 +87,24 @@ Deploy the built version to the gh-pages branch of suitably named repo:
 * [FAQ](https://github.com/gladiusjs/html5-game-template/wiki/FAQ)
 * upcoming features: jshint, mozilla persona auth, Node.js server side piece
 
+# credits
+
+main developers: Dan Mosedale (@dmose), and James Burke (@jrburke)
+
+This template is based on, and still shares code with, @jrburke's 
+create-responsive-template for volo, and leans heavily on volo.
+Thanks to the contributors of volo, and create-responsive-template.
+
+Thanks also to Alan Kligman for helping crispify various parts of the 
+the documentation and what we're shipping.
+
+Thanks also to the authors of the following:
+
+[node.js](http://nodejs.org/)
+[almond.js](https://github.com/jrburke/almond)
+[RequireJS](http://requirejs.org)
+[r.js](https://github.com/jrburke/r.js/)
+[QUnit](http://docs.jquery.com/QUnit)
+[game-shim](https://github.com/toji/game-shim)
+and, of course, [git](http://git-scm.com/) and [github](http://github.com/)
+
