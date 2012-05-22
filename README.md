@@ -93,7 +93,7 @@ Persona auth](http://www.mozilla.org/en-US/persona/about/), Node.js server side 
 Main developers: Dan Mosedale and James Burke 
 
 This template is based on, and still shares code with, James Burke's
-(create-responsive-template)[https://github.com/volojs/create-responsive-template]
+[create-responsive-template](https://github.com/volojs/create-responsive-template)
 for [volo](https://github.com/volojs/volo), and leans heavily on volo.
 Thanks to the contributors to both volo and create-responsive-template.
 
