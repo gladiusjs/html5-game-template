@@ -18,7 +18,7 @@ get on with writing that game.
 
 **default best practices help your codebase scale**
 
-* structured for maintainability using [RequireJS](requirejs.org)
+* structured for maintainability using [RequireJS](http://requirejs.org/)
 * includes pre-configured QUnit test harness
 
 **easy to specialize**
